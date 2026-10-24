@@ -1,0 +1,50 @@
+{
+  "name": "ourtube",
+  "productName": "OurTube",
+  "version": "1.0.0",
+  "description": "A local, download-first YouTube subscription feed for your desktop.",
+  "main": "electron/main.js",
+  "author": "OurTube",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k -n vite,electron -c magenta,cyan \"vite\" \"wait-on tcp:127.0.0.1:5173 && cross-env VITE_DEV_SERVER_URL=http://127.0.0.1:5173 electron .\"",
+    "build": "vite build",
+    "start": "vite build && electron .",
+    "dist": "vite build && electron-builder"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "fast-xml-parser": "^4.5.0",
+    "ffmpeg-static": "^5.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^5.4.11",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "app.ourtube.desktop",
+    "productName": "OurTube",
+    "directories": { "output": "release", "buildResources": "build" },
+    "icon": "build/icon.png",
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "build/icon.png",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/ffmpeg-static/**"
+    ],
+    "mac": { "target": "dmg", "category": "public.app-category.video" },
+    "win": { "target": "nsis" },
+    "linux": { "target": "AppImage", "category": "Video" }
+  }
+}
